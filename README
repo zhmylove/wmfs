@@ -1,3 +1,12 @@
+ABOUT THIS FORK:
+A new WMFS2 seems to be extremely boring and lacks a lot of functionality:
+EWMH, Xft fonts, always_on_top, and tons of others.
+So for me brilliant wmfs-1 is the best option to use.
+Every time I've made a new OS installation it took some hours to
+re-write and improve wmfs for me.
+Thus I decided to keep all of my changes here.
+Therefore I modestly add my name to a contributors list below.
+
 ABOUT :
 WMFS Window Manager.
    * Window Manager From Scratch
@@ -15,6 +24,7 @@ CONTRIBUTORS :
  - Tomáš Chvátal <scarabeus@gentoo.org>
  - David Delassus <linkdd@ydb.me>
  - David Demelier <markand@malikania.fr>
+ - Sergey Zhmylev <s@zhmylove.ru>
 
 LICENSE : BSD, see COPYING.
 
