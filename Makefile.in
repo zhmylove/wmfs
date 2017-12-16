@@ -1,4 +1,5 @@
 PROG=wmfs
+STATUS=wmfs_status.sh
 MAN=wmfs.1
 
 # wmfs version
@@ -60,6 +61,7 @@ install: all
 	@echo installing executable file to ${DESTDIR}${PREFIX}/bin
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	install ${PROG} ${DESTDIR}${PREFIX}/bin
+	install -m 755 ${STATUS} ${DESTDIR}${PREFIX}/bin
 	@echo installing manual page to ${DESTDIR}${MANPREFIX}/man1
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	install -m 644 ${MAN}.gz ${DESTDIR}${MANPREFIX}/man1/
