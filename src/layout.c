@@ -767,6 +767,15 @@ uicb_togglemax(uicb_t cmd)
 
      if(sel->flags & MaxFlag)
      {
+          /* Hide infobar */
+          screen_get_sel();
+          tags[selscreen][seltag[selscreen]].orig_barpos =
+               tags[selscreen][seltag[selscreen]].barpos;
+          infobar_set_position(IB_Hide);
+
+          /* Hide client borders */
+          conf.client.borderheight = 0;
+
           sel->ogeo = sel->geo;
           sel->free_geo = sel->geo;
           sel->flags &= ~(TileFlag | FreeFlag);
@@ -777,6 +786,13 @@ uicb_togglemax(uicb_t cmd)
      }
      else
      {
+          /* Restore borders height */
+          conf.client.borderheight = conf.client.conf_borderheight;
+
+          /* Restore infobar original position and padding */
+          screen_get_sel();
+          infobar_set_position(tags[selscreen][seltag[selscreen]].orig_barpos);
+
           sel->geo = sel->ogeo;
 
           client_moveresize(sel, sel->geo, True);

@@ -304,6 +304,7 @@ conf_client_section(void)
 
      if ((conf.client.borderheight = fetch_opt_first(sec, "1", "border_height").num) < 1)
           conf.client.borderheight = 1;
+     conf.client.conf_borderheight = conf.client.borderheight;
 
      conf.client.border_shadow        = fetch_opt_first(sec, "false", "border_shadow").boolean;
      conf.client.place_at_mouse       = fetch_opt_first(sec, "false", "place_at_mouse").boolean;
@@ -540,6 +541,7 @@ conf_tag_section(void)
           fetch_opt_first(def_tag, "0.6", "mwfact").fnum,
           fetch_opt_first(def_tag, "1", "nmaster").num,
           0,
+          bar_pos,
           bar_pos,
           bar_pos,
           layout_name_to_struct(conf.layout, fetch_opt_first(def_tag, "tile", "layout").str, conf.nlayout, layout_list),

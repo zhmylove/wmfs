@@ -319,6 +319,7 @@ typedef struct
      uint flags;
      int barpos;
      int prev_barpos;
+     int orig_barpos;
      Layout layout;
      uint tagad;
      MouseBinding *mouse;
@@ -474,6 +475,7 @@ typedef struct
           bool border_shadow;
           bool new_client_get_mouse;
           int borderheight;
+          int conf_borderheight;
           char *autofree, *automax;
           uint bordernormal;
           uint borderfocus;
