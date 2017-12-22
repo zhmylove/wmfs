@@ -250,7 +250,7 @@ infobar_draw_layout(InfoBar *i)
                     getcolor(i->layout_button->fg));
 
      if(tags[s][seltag[s]].layout.symbol)
-          barwin_draw_text(i->layout_button, (PAD >> 1), FHINFOBAR, tags[s][seltag[s]].layout.symbol);
+          barwin_draw_text(i->layout_button, PAD, FHINFOBAR, tags[s][seltag[s]].layout.symbol);
 
      return;
 }
@@ -400,7 +400,7 @@ infobar_draw_taglist(InfoBar *i)
           barwin_refresh_color(i->tags[j]);
 
           if(tags[sc][j].name)
-               barwin_draw_text(i->tags[j], (PAD >> 1), FHINFOBAR, tags[sc][j].name);
+               barwin_draw_text(i->tags[j], (PAD >> 1) + 1, FHINFOBAR, tags[sc][j].name);
      }
 
      return;
