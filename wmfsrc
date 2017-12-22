@@ -173,48 +173,6 @@
    [/rule]
 [/rules]
 
-[menu]
-   [set_menu]
-      name = "rootmenu"
-
-      align = "left"
-
-      fg_focus  = "#262729" bg_focus  = "#A3BABF"
-      fg_normal = "#A3BABF" bg_normal = "#262729"
-
-      [item] name = "Terminal"        func = "spawn" cmd = "xterm"       [/item]
-      [item] name = "Applications" submenu = "appmenu"                   [/item]
-      [item] name = "Next tag"        func = "tag_next"                  [/item]
-      [item] name = "Previous tag"    func = "tag_prev"                  [/item]
-      [item] name = "Next layout"     func = "layout_next"               [/item]
-      [item] name = "Previous layout" func = "layout_prev"               [/item]
-      [item] name = "Toggle infobar"  func = "toggle_infobar_position"   [/item]
-      [item] name = "Quit WMFS"       func = "quit"                      [/item]
-   [/set_menu]
-
-   [set_menu]
-      name = "appmenu"
-      align = "left"
-
-      fg_focus  = "#262729" bg_focus  = "#7E89A2"
-      fg_normal = "#9F9AB3" bg_normal = "#262729"
-
-      [item] name = "Browser"         func = "spawn" cmd = "firefox"     [/item]
-      [item] name = "Calculator"      func = "spawn" cmd = "xcalc"       [/item]
-   [/set_menu]
-
-   [set_menu]
-      name = "clientmenu"
-
-      fg_focus  = "#A3BABF" bg_focus  = "#003366"
-      fg_normal = "#A3BABF" bg_normal = "#262729"
-
-      [item] name = "Close"    func = "client_kill"                      [/item]
-      [item] name = "Maximize" func = "toggle_max"  check = "check_max"  [/item]
-      [item] name = "Free"     func = "toggle_free" check = "check_free" [/item]
-   [/set_menu]
-[/menu]
-
 [keys]
    [key] mod = {"Alt", "Control"} key = "r" func = "reload" [/key]
 
