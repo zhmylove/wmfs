@@ -95,7 +95,9 @@
 #define FHINFOBAR    ((font.height - font.de) + (((int)INFOBARH - font.height) >> 1))
 #define SHADH        (1)
 #define BORDH        conf.client.borderheight
+#define CBORDH       ((c->flags & HideBordersFlag) ? 0 : conf.client.borderheight)
 #define TBARH        ((conf.titlebar.height < BORDH) ? BORDH : conf.titlebar.height)
+#define CTBARH       ((conf.titlebar.height < CBORDH) ? CBORDH : conf.titlebar.height)
 #define RESHW        (6 * (BORDH))
 #define BUTTONWH     (TBARH >> 1)
 #define DEF_CONF     ".config/wmfs/wmfsrc"
@@ -114,6 +116,8 @@
 #define ATOM(a)            XInternAtom(dpy, (a), False)
 #define FRAMEW(w)          ((w) + (BORDH << 1))
 #define FRAMEH(h)          ((h) + (BORDH  + TBARH))
+#define CFRAMEW(w)         ((w) + (CBORDH << 1))
+#define CFRAMEH(h)         ((h) + (CBORDH  + TBARH))
 #define CHECK(x)           if(!(x)) return
 #define LEN(x)             (sizeof(x) / sizeof((x)[0]))
 #define MAXCLIST           (64)

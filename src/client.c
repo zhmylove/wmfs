@@ -929,7 +929,7 @@ client_moveresize(Client *c, Geo geo, bool r)
 
      frame_moveresize(c, c->wrgeo);
 
-     XMoveResizeWindow(dpy, c->win, BORDH + rhx, TBARH, c->geo.width, c->geo.height);
+     XMoveResizeWindow(dpy, c->win, CBORDH + rhx, CTBARH, c->geo.width, c->geo.height);
 
      client_update_attributes(c);
      client_configure(c);

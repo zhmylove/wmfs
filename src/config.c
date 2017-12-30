@@ -304,7 +304,6 @@ conf_client_section(void)
 
      if ((conf.client.borderheight = fetch_opt_first(sec, "1", "border_height").num) < 1)
           conf.client.borderheight = 1;
-     conf.client.conf_borderheight = conf.client.borderheight;
 
      conf.client.border_shadow        = fetch_opt_first(sec, "false", "border_shadow").boolean;
      conf.client.place_at_mouse       = fetch_opt_first(sec, "false", "place_at_mouse").boolean;

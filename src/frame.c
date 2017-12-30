@@ -52,10 +52,10 @@ frame_create(Client *c)
           |KeyMask|ButtonMask|MouseMask;
 
      /* Set property */
-     c->frame_geo.x          = c->geo.x - BORDH;
+     c->frame_geo.x          = c->geo.x - CBORDH;
      c->frame_geo.y          = c->geo.y - TBARH;
-     c->frame_geo.width      = FRAMEW(c->geo.width);
-     c->frame_geo.height     = FRAMEH(c->geo.height);
+     c->frame_geo.width      = CFRAMEW(c->geo.width);
+     c->frame_geo.height     = CFRAMEH(c->geo.height);
      c->colors.fg            = conf.titlebar.fg_normal;
      c->colors.frame         = conf.client.bordernormal;
      c->colors.resizecorner  = conf.client.resizecorner_normal;
@@ -71,7 +71,7 @@ frame_create(Client *c)
 
 
      /* Create titlebar window */
-     if(TBARH - BORDH)
+     if(TBARH - CBORDH)
      {
           c->titlebar = barwin_create(c->frame, 0, 0,
                                       c->frame_geo.width ,
@@ -87,7 +87,7 @@ frame_create(Client *c)
                for(i = 0; i < conf.titlebar.nbutton; ++i)
                {
                     CWIN(c->button[i], c->titlebar->win,
-                         (c->button_last_x = (BORDH + (BUTTONWH * i) + (i << 2))),
+                         (c->button_last_x = (CBORDH + (BUTTONWH * i) + (i << 2))),
                          ((BUTTONWH - 1) >> 1), BUTTONWH, BUTTONWH,
                          1, CWEventMask|CWOverrideRedirect|CWBackPixmap,
                          c->colors.frame, &at);
@@ -128,7 +128,7 @@ frame_create(Client *c)
      }
 
      /* Reparent window with the frame */
-     XReparentWindow(dpy, c->win, c->frame, BORDH, TBARH);
+     XReparentWindow(dpy, c->win, c->frame, CBORDH, TBARH);
 
      return;
 }
@@ -140,7 +140,7 @@ void
 frame_delete(Client *c)
 {
      /* If there is, delete the titlebar */
-     if(TBARH - BORDH)
+     if(c->titlebar && TBARH - CBORDH)
      {
           barwin_delete_subwin(c->titlebar);
           barwin_delete(c->titlebar);
@@ -162,10 +162,10 @@ frame_moveresize(Client *c, Geo geo)
 {
      CHECK(c);
 
-     c->frame_geo.x      = (geo.x) ? geo.x - BORDH : c->frame_geo.x;
+     c->frame_geo.x      = (geo.x) ? geo.x - CBORDH : c->frame_geo.x;
      c->frame_geo.y      = (geo.y) ? geo.y - TBARH : c->frame_geo.y;
-     c->frame_geo.width  = (geo.width)  ? FRAMEW(geo.width)  : c->frame_geo.width;
-     c->frame_geo.height = (geo.height) ? FRAMEH(geo.height) : c->frame_geo.height;
+     c->frame_geo.width  = (geo.width)  ? CFRAMEW(geo.width)  : c->frame_geo.width;
+     c->frame_geo.height = (geo.height) ? CFRAMEH(geo.height) : c->frame_geo.height;
 
      /* Frame */
      XMoveResizeWindow(dpy, c->frame,
@@ -175,7 +175,7 @@ frame_moveresize(Client *c, Geo geo)
                        c->frame_geo.height);
 
      /* Titlebar */
-     if(TBARH - BORDH)
+     if(TBARH - CBORDH)
           barwin_resize(c->titlebar, c->frame_geo.width, TBARH);
 
      /* Resize area */
@@ -209,7 +209,7 @@ frame_update_color(Client *c, bool focused)
           c->colors.fg           = conf.titlebar.fg_normal;
           c->colors.resizecorner = conf.client.resizecorner_normal;
 
-          if(TBARH - BORDH)
+          if(c->titlebar && TBARH - CBORDH)
                c->titlebar->stipple_color = conf.titlebar.stipple.colors.normal;
      }
      /* Focused */
@@ -219,7 +219,7 @@ frame_update_color(Client *c, bool focused)
           c->colors.fg           = conf.titlebar.fg_focus;
           c->colors.resizecorner = conf.client.resizecorner_focus;
 
-          if(TBARH - BORDH)
+          if(c->titlebar && TBARH - CBORDH)
                c->titlebar->stipple_color = conf.titlebar.stipple.colors.focus;
      }
 
@@ -243,7 +243,7 @@ frame_update(Client *c)
 
      CHECK(c);
 
-     if(TBARH - BORDH)
+     if(c->titlebar && TBARH - CBORDH)
      {
           c->titlebar->bg = c->colors.frame;
           c->titlebar->fg = c->colors.fg;
@@ -255,7 +255,7 @@ frame_update(Client *c)
           {
                if(conf.titlebar.stipple.active)
                     draw_rectangle(c->titlebar->dr, 0, 0, c->button_last_x + TBARH - (TBARH >> 2),
-                                   TBARH + (BORDH << 2), c->colors.frame);
+                                   TBARH + (CBORDH << 2), c->colors.frame);
 
                for(i = 0; i < conf.titlebar.nbutton; ++i)
                {
@@ -308,7 +308,7 @@ frame_update(Client *c)
           XClearWindow(dpy, c->bottom);
      }
 
-     if(TBARH - BORDH)
+     if(c->titlebar && TBARH - CBORDH)
           barwin_draw_text(c->titlebar,
                     (c->frame_geo.width >> 1) - (textw(c->title) >> 1),
                     ((font.height - font.de) + ((TBARH - font.height) >> 1)),

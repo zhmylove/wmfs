@@ -769,12 +769,14 @@ uicb_togglemax(uicb_t cmd)
      {
           /* Hide infobar */
           screen_get_sel();
-          tags[selscreen][seltag[selscreen]].orig_barpos =
-               tags[selscreen][seltag[selscreen]].barpos;
+          if(tags[selscreen][seltag[selscreen]].orig_barpos !=
+               tags[selscreen][seltag[selscreen]].barpos)
+               tags[selscreen][seltag[selscreen]].orig_barpos =
+                    tags[selscreen][seltag[selscreen]].barpos;
           infobar_set_position(IB_Hide);
 
           /* Hide client borders */
-          conf.client.borderheight = 0;
+          sel->flags |= HideBordersFlag;
 
           sel->ogeo = sel->geo;
           sel->free_geo = sel->geo;
@@ -787,7 +789,7 @@ uicb_togglemax(uicb_t cmd)
      else
      {
           /* Restore borders height */
-          conf.client.borderheight = conf.client.conf_borderheight;
+          sel->flags &= ~(HideBordersFlag);
 
           /* Restore infobar original position and padding */
           screen_get_sel();

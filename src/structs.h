@@ -41,18 +41,19 @@
 #define HISTOLEN       128
 
 /* Clients flags definition */
-#define FreeFlag   0x01
-#define MaxFlag    0x02
-#define TileFlag   0x04
-#define HideFlag   0x08
-#define LMaxFlag   0x10
-#define UnmapFlag  0x20
-#define HintFlag   0x40
-#define FSSFlag    0x80
-#define AboveFlag  0x100
-#define UrgentFlag 0x200
-#define FLayFlag   0x400
-#define DockFlag   0x800
+#define FreeFlag        0x01
+#define MaxFlag         0x02
+#define TileFlag        0x04
+#define HideFlag        0x08
+#define LMaxFlag        0x10
+#define UnmapFlag       0x20
+#define HintFlag        0x40
+#define FSSFlag         0x80
+#define AboveFlag       0x100
+#define UrgentFlag      0x200
+#define FLayFlag        0x400
+#define DockFlag        0x800
+#define HideBordersFlag 0x1000
 
 /* Layout flags definition */
 #define IntegrationFlag 0x01
@@ -477,7 +478,6 @@ typedef struct
           bool border_shadow;
           bool new_client_get_mouse;
           int borderheight;
-          int conf_borderheight;
           char *autofree, *automax;
           uint bordernormal;
           uint borderfocus;

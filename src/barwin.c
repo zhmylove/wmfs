@@ -180,6 +180,9 @@ barwin_move(BarWindow *bw, int x, int y)
 void
 barwin_resize(BarWindow *bw, int w, int h)
 {
+     if(!bw)
+          return;
+
      if(bw->geo.width == w && bw->geo.height == h)
           return;
 
