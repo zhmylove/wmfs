@@ -80,6 +80,7 @@ ewmh_init_hints(void)
      net_atom[net_wm_state_sticky]            = ATOM("_NET_WM_STATE_STICKY");
      net_atom[net_wm_state_demands_attention] = ATOM("_NET_WM_STATE_DEMANDS_ATTENTION");
      net_atom[net_wm_system_tray_opcode]      = ATOM("_NET_SYSTEM_TRAY_OPCODE");
+     net_atom[net_wm_bypass_compositor]       = ATOM("_NET_WM_BYPASS_COMPOSITOR");
      net_atom[net_system_tray_message_data]   = ATOM("_NET_SYSTEM_TRAY_MESSAGE_DATA");
      net_atom[net_system_tray_visual]         = ATOM("_NET_SYSTEM_TRAY_VISUAL");
 
@@ -324,23 +325,28 @@ ewmh_set_desktop_geometry(void)
 
 /** Manage _NET_WM_STATE_* ewmh
  */
+
 void
 ewmh_manage_net_wm_state(long data_l[], Client *c)
 {
      /* Manage _NET_WM_STATE_FULLSCREEN */
-     if(data_l[1] == (long)net_atom[net_wm_state_fullscreen])
+     if(data_l[1] == (long)net_atom[net_wm_state_fullscreen]
+        || data_l[2] == (long)net_atom[net_wm_state_fullscreen])
      {
-          if(data_l[0] == _NET_WM_STATE_ADD && !(c->flags & FSSFlag))
+          if(data_l[0] == _NET_WM_STATE_ADD
+             || (data_l[0] == _NET_WM_STATE_TOGGLE && !(c->fullscreen)))
           {
+               c->fullscreen = 1;
+
+               XChangeProperty(dpy, c->win, net_atom[net_wm_bypass_compositor], XA_CARDINAL, 32,
+                               PropModeReplace, (uchar *)&c->fullscreen, 1);
+               XChangeProperty(dpy, c->win, net_atom[net_wm_state], XA_ATOM, 32, PropModeReplace,
+                               (uchar *)&net_atom[net_wm_state_fullscreen], 1);
                c->screen = screen_get_with_geo(c->geo.x, c->geo.y);
-               c->flags &= ~UnmapFlag;
-               XMapWindow(dpy, c->win);
                XReparentWindow(dpy, c->win, ROOT, spgeo[c->screen].x, spgeo[c->screen].y);
                XResizeWindow(dpy, c->win,
                              spgeo[c->screen].width,
                              spgeo[c->screen].height);
-               XChangeProperty(dpy, c->win, net_atom[net_wm_state], XA_ATOM, 32,
-                               PropModeReplace, (uchar *)&net_atom[net_wm_state_fullscreen], 1);
 
                c->tmp_geo = c->geo;
 
@@ -349,17 +355,26 @@ ewmh_manage_net_wm_state(long data_l[], Client *c)
 
                c->flags |= (FSSFlag | MaxFlag);
 
-               client_raise(c);
-               client_focus(c);
+               if(c->tag)
+                    client_focus(c);
+
+               XRaiseWindow(dpy, c->win);
                XUnmapWindow(dpy, c->frame);
           }
-          else if(data_l[0] == _NET_WM_STATE_REMOVE && (c->flags & FSSFlag))
+          else
           {
-               XChangeProperty(dpy, c->win, net_atom[net_wm_state], XA_ATOM, 32, PropModeReplace, (uchar *)0, 0);
+               c->fullscreen = 0;
+
                c->flags &= ~(FSSFlag | MaxFlag);
-               client_map(c);
+
+               XChangeProperty(dpy, c->win, net_atom[net_wm_state], XA_ATOM, 32, PropModeReplace,
+                               (uchar *)&c->fullscreen, 1);
+               XChangeProperty(dpy, c->win, net_atom[net_wm_bypass_compositor], XA_CARDINAL, 32,
+                               PropModeReplace, (uchar *)&c->fullscreen, 1);
                XReparentWindow(dpy, c->win, c->frame, BORDH, TBARH);
+
                client_moveresize(c, c->tmp_geo, False);
+               client_map(c);
           }
      }
      /* Manage _NET_WM_STATE_STICKY */

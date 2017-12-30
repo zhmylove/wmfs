@@ -147,6 +147,7 @@ enum
      net_wm_state_sticky,
      net_wm_state_demands_attention,
      net_wm_system_tray_opcode,
+     net_wm_bypass_compositor,
      net_system_tray_message_data,
      net_system_tray_s,
      net_system_tray_visual,
@@ -220,6 +221,7 @@ typedef struct Client
      Geo frame_geo;            /* Frame geo */
      Geo ogeo;                 /* Old window attribute */
      Geo split_geo, free_geo;  /* Split & Free window attribute */
+     int fullscreen;
      /* Tile size factors */
      int tilefact[4];
      /* For resizehint usage */
