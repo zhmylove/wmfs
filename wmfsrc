@@ -162,6 +162,7 @@
       class         = "Firefox"
       role          = "browser"
       tag           = 2
+      follow_client = true
    [/rule]
    [rule]
       instance      = "cssh"
@@ -182,6 +183,8 @@
       cmd = "dmenu_run -i -p '' -fn 'DejaVu Sans Mono-10' -nb '#262729' -nf '#A3BABF' -sb '#A3BABF' -sf '#262729'"
    [/key]
    [key] mod = {"Super"} key = "b" func = "spawn" cmd = "firefox" [/key]
+   [key] mod = {"Super"} key = "n" func = "spawn" cmd = "nautilus" [/key]
+   [key] mod = {"Super","Shift"} key = "s" func = "spawn" cmd = "KSleep" [/key]
    [key] mod = {"Super"} key = "F11" func = "spawn" cmd = "/usr/local/bin/vol -5" [/key]
    [key] mod = {"Super"} key = "F12" func = "spawn" cmd = "/usr/local/bin/vol +5" [/key]
 
@@ -266,4 +269,5 @@
    [key] mod = {"Super","Shift"} key = "j" func = "client_swap_bottom" [/key]
 
    [key] mod = {"Super"} key = "a" func = "client_ignore_tag" [/key]
+   [key] mod = {"Super"} key = "t" func = "toggle_infobar_display" [/key]
 [/keys]

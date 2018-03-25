@@ -508,6 +508,12 @@ client_kill(Client *c)
 
      CHECK(c);
 
+     /* Restore infobar position */
+     if(c->flags & MaxFlag) {
+          screen_get_sel();
+          infobar_set_position(tags[selscreen][seltag[selscreen]].orig_barpos);
+     }
+
      if(XGetWMProtocols(dpy, c->win, &atom, &proto) && atom)
      {
           while(proto--)
