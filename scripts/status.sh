@@ -1,11 +1,12 @@
 #!/bin/sh
-#WMFS status.sh example file
-#Will be executed if put in ~/.config/wmfs/
-#Timing adjustable in wmfsrc (misc -> status_timing)
+# Made by: KorG
 
-statustext()
-{
-     wmfs -s "`date`"
-}
+SLEEP=15
 
-while true; do statustext; sleep 10; done
+while true ;do
+
+   STATUS="`date +%H:%M`"
+
+   wmfs -s "$STATUS"
+   sleep "$SLEEP"
+done
